@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+	position:relative; /*태그 본연의 위치 = normal position*/
+	left:-1000px;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+</style>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(function(){
+	$("table").animate({
+		"left":"0px"
+	});
+
+	$("button").click(function(){
+		location.href="/reboard/write.html";
+	});
+});
+
+
+</script>
+</head>
+<body>
+
+<table>
+  <tr>
+    <th width="5%">No</th>
+    <th width="65%">제목</th>
+    <th width="10%">작성자</th>
+    <th width="10%">조회수</th>
+    <th width="10%">등록일</th>
+  </tr>
+
+	<%for(var i=0;i<records.length;i++){%>
+	<%var obj=records[i];%>
+  <tr>
+    <td><%=i%></td>
+    <td>
+		<div style="position:relative;left:<%=obj.depth*20%>px">
+			<%if(obj.depth>0){ //답변이라면...%>
+				<i class="fa fa-commenting-o"></i>	
+			<%}%>	
+			<a href="/reboard/detail?reboard_id=<%=obj.reboard_id%>"><%=obj.title%></a>
+		</div>	
+	</td>
+	<td><%=obj.writer%></td>
+	<td><%=obj.hit%></td>
+	<td><%=obj.regdate%></td>
+  </tr>
+  <%}%>
+  
+  <tr>
+	<td colspan="5">
+		<button>글등록</button>
+	</td>
+  </tr>
+
+</table>
+
+</body>
+</html>

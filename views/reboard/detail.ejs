@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=button] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=button]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+$(function(){
+	$("#bt_list").click(function(){
+		location.href="/reboard/list";
+	});
+
+	$("#bt_reply").click(function(){
+		//답변 폼은 내가 본글의 team, step, depth 를 알아야 하므로,
+		//단순하게 링크를 걸면안되고, 파라미터값들을 가지고 가야 한다..
+		//location.href="/reboard/replyform";
+		//히든으로 숨겨진 파라미터까지 한꺼번에 편하게 보내기 위해서 
+		//post 방식으로 전송하겠다!!!
+		$("form").attr({
+			"action":"/reboard/replyform",
+			"method":"post"
+		});
+		$("form").submit(); //전송
+
+	});
+		
+	$("#bt_del").click(function(){
+		del();
+	});
+
+});
+
+//post 로 전송하자!!
+function regist(){
+	$("form").attr({
+		"action":"/reboard/regist",
+		"method":"post"
+	});
+	$("form").submit(); //전송
+}
+
+function del(){
+	if(confirm("삭제하시겠습니까?")){
+		$("form").attr({
+			"action":"/reboard/delete",
+			"method":"post"
+		});
+		$("form").submit(); //전송
+	}
+}
+</script>
+</head>
+<body>
+
+<h3>Contact Form</h3>
+
+<div class="container">
+  <form>
+	<input type="hidden" name="team" value="<%=record.team%>">
+	<input type="hidden" name="step" value="<%=record.step%>">
+	<input type="hidden" name="depth" value="<%=record.depth%>">
+	<input type="hidden" name="reboard_id" value="<%=record.reboard_id%>">
+
+    <label for="fname">작성자</label>
+    <input type="text" id="writer" name="writer" value="<%=record.writer%>">
+
+    <label for="lname">제목</label>
+    <input type="text" id="title" name="title"  value="<%=record.title%>">
+
+    <label for="subject">내용</label>
+    <textarea id="content" name="content" style="height:150px"><%=record.content%></textarea>
+
+	<input type="button" id="bt_list"		value="목록">
+    <input type="button" id="bt_reply"	value="답변">
+	<input type="button" id="bt_edit"		value="수정">
+	<input type="button" id="bt_del"		value="삭제">
+
+	</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+----------------------------------------------------------
+-- 답변형 게시판 테이블 정의
+-- 같은 종류글들끼리 묶는 용도의 컬럼 : team==category 
+-- 같은 종류글 내에서의 보여질 정렬 : step==rank
+-- 답변의 깊이를 표현하는 컬럼 : depth
+-- varchar 와 char의 차이점 
+-- varchar 는 변경가능한 문자열형 
+-- varchar(6) 는 메모리의 효율성을 위해 주로 사용하고,
+-- char(6) 는 데이터가 고정된 경우 사용된다..
+-----------------------------------------------------------
+create  table  reboard(
+    reboard_id  int  primary key auto_increment   		
+  , writer varchar(30)   
+  , title varchar(200)
+  , content  text 
+  , regdate timestamp default now()
+  , hit int default 0
+  , team int default 0  -- 처음 insert  시 mysql  이값을 결정X
+  , step int default 0
+  , depth int default 0					
+) default   character  set utf8;
+
+
+
+
+
+
+
+
